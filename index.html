@@ -1,538 +1,165 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description" content="A single-page persona blog built for an accessibility-aware assignment." />
-    <title>Minaís Tiny Wins ó Persona Blog</title>
-
-    <style>
-        :root {
-            --bg: #0f1220;
-            --panel: #161a2c;
-            --panel2: #1c2140;
-            --text: #eef0ff;
-            --muted: #b9bde6;
-            --accent: #7cf0c7;
-            --accent2: #8aa7ff;
-            --danger: #ff6b8b;
-            --border: rgba(255,255,255,.12);
-            --shadow: 0 10px 30px rgba(0,0,0,.35);
-            --radius: 18px;
-            --max: 1050px;
-            --focus: 3px solid var(--accent);
-            --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-        }
-
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg: #f7f7fb;
-                --panel: #ffffff;
-                --panel2: #f1f3ff;
-                --text: #101428;
-                --muted: #3f466b;
-                --border: rgba(16,20,40,.14);
-                --shadow: 0 10px 30px rgba(16,20,40,.12);
-            }
-        }
-
-        * {
-            box-sizing: border-box
-        }
-
-        html {
-            scroll-behavior: smooth
-        }
-
-        body {
-            margin: 0;
-            font-family: var(--font);
-            background: radial-gradient(900px 500px at 10% 0%, rgba(124,240,199,.20), transparent 60%), radial-gradient(900px 500px at 90% 10%, rgba(138,167,255,.18), transparent 55%), var(--bg);
-            color: var(--text);
-            line-height: 1.55;
-            letter-spacing: .2px;
-        }
-
-        /* Skip link for keyboard users */
-        .skip {
-            position: absolute;
-            left: -999px;
-            top: 10px;
-            padding: 10px 14px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            color: var(--text);
-            z-index: 999;
-        }
-
-            .skip:focus {
-                left: 10px;
-                outline: var(--focus)
-            }
-
-        a {
-            color: var(--accent2);
-            text-underline-offset: 3px;
-        }
-
-            a:focus {
-                outline: var(--focus);
-                outline-offset: 3px;
-                border-radius: 10px;
-            }
-
-        button:focus {
-            outline: var(--focus);
-            outline-offset: 3px
-        }
-
-        .wrap {
-            max-width: var(--max);
-            margin: 0 auto;
-            padding: 28px 18px 60px;
-        }
-
-        header {
-            background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 70%);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 22px;
-            box-shadow: var(--shadow);
-            margin-top: 10px;
-        }
-
-        .top {
-            display: flex;
-            gap: 18px;
-            align-items: flex-start;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .brand h1 {
-            margin: 0 0 6px;
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
-            letter-spacing: .3px;
-        }
-
-        .brand p {
-            margin: 0;
-            color: var(--muted);
-            max-width: 70ch;
-        }
-
-        nav {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 6px;
-        }
-
-            nav a {
-                display: inline-block;
-                padding: 10px 12px;
-                background: rgba(255,255,255,.05);
-                border: 1px solid var(--border);
-                border-radius: 999px;
-                text-decoration: none;
-                color: var(--text);
-            }
-
-                nav a:hover {
-                    border-color: rgba(255,255,255,.22)
-                }
-
-                nav a:focus {
-                    outline: var(--focus);
-                    outline-offset: 3px
-                }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1.15fr .85fr;
-            gap: 18px;
-            margin-top: 18px;
-        }
-
-        @media (max-width: 920px) {
-            .grid {
-                grid-template-columns: 1fr
-            }
-        }
-
-        .card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 18px;
-        }
-
-            .card h2 {
-                margin: 0 0 10px;
-                font-size: 1.25rem;
-            }
-
-        .pillrow {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .pill {
-            font-size: .95rem;
-            padding: 8px 10px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,.04);
-            color: var(--text);
-            white-space: nowrap;
-        }
-
-        .persona {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        @media (max-width: 560px) {
-            .persona {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .kv {
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
-            background: linear-gradient(180deg, rgba(255,255,255,.05), transparent 60%);
-        }
-
-        .k {
-            font-weight: 650;
-        }
-
-        .v {
-            color: var(--muted);
-            margin-top: 4px;
-        }
-
-        main {
-            margin-top: 18px;
-        }
-
-        section {
-            scroll-margin-top: 14px;
-        }
-
-        .posts {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 14px;
-        }
-
-        article {
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 16px;
-            background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 70%), var(--panel);
-        }
-
-            article h3 {
-                margin: 0 0 4px;
-                font-size: 1.12rem;
-            }
-
-        .meta {
-            color: var(--muted);
-            font-size: .96rem;
-            margin: 0 0 10px;
-        }
-
-        .callout {
-            border-left: 4px solid var(--accent);
-            padding: 10px 12px;
-            border-radius: 12px;
-            background: rgba(124,240,199,.08);
-            margin-top: 10px;
-        }
-
-        .tools ul {
-            margin: 10px 0 0 18px;
-        }
-
-        .btnbar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .btn {
-            cursor: pointer;
-            border-radius: 999px;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,.06);
-            color: var(--text);
-            font: inherit;
-        }
-
-            .btn:hover {
-                border-color: rgba(255,255,255,.25)
-            }
-
-            .btn[aria-pressed="true"] {
-                border-color: rgba(124,240,199,.55);
-                box-shadow: 0 0 0 3px rgba(124,240,199,.12);
-            }
-
-        footer {
-            margin-top: 22px;
-            color: var(--muted);
-            text-align: center;
-            font-size: .95rem;
-        }
-
-        /* Optional high-contrast toggle (adds clarity for low vision) */
-        .hc {
-            --bg: #000;
-            --panel: #000;
-            --panel2: #000;
-            --text: #fff;
-            --muted: #e7e7e7;
-            --accent: #00ffd5;
-            --accent2: #7aa6ff;
-            --border: rgba(255,255,255,.55);
-            background: #000 !important;
-        }
-
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto
-            }
-
-            * {
-                transition: none !important;
-                animation: none !important;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Persona ‚Äî Nate Thompson</title>
+  <meta name="description" content="Persona biography site for Nate Thompson ‚Äî freelance photographer & sustainable travel content creator." />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <a class="skip" href="#content">Skip to main content</a>
+  <div class="wrapper">
+    <header>
+      <div>
+        <h1 class="title">Nate Thompson</h1>
+        <p class="subtitle">Freelance Photographer &amp; Sustainable Travel Content Creator ‚Ä¢ Age 32</p>
+      </div>
+      <div class="badge" aria-label="Location">
+        <span aria-hidden="true">üìç</span>
+        <span>Nomadic ‚Äî currently based in British Columbia</span>
+      </div>
+    </header>
 
-    <div class="wrap">
-        <header role="banner" aria-label="Site header">
-            <div class="top">
-                <div class="brand">
-                    <h1>Minaís Tiny Wins</h1>
-                    <p>
-                        A single-page blog for a persona who navigates low vision and chronic fatigue while trying to keep home life manageable.
-                        This site is built with semantic HTML + accessibility-friendly choices.
-                    </p>
-                    <div class="pillrow" aria-label="Quick tags">
-                        <span class="pill">Persona Blog</span>
-                        <span class="pill">Accessible Design</span>
-                        <span class="pill">Home Living + Cooking Barriers</span>
-                        <span class="pill">Single Page</span>
-                    </div>
-                </div>
+    <div class="grid">
+      <!-- Left column: snapshot -->
+      <aside class="card kv">
+        <img class="portrait" src="assets/nate-thompson.jpg" alt="Portrait of Nate Thompson, a fictional persona." />
 
-                <div>
-                    <nav aria-label="Primary navigation">
-                        <a href="#about">About</a>
-                        <a href="#needs">Needs</a>
-                        <a href="#tools">Assistive Tools</a>
-                        <a href="#posts">Blog</a>
-                        <a href="#accessibility">Accessibility Notes</a>
-                    </nav>
+        <h2>Snapshot</h2>
+        <dl>
+          <div>
+            <dt>Name</dt>
+            <dd>Nate Thompson</dd>
+          </div>
+          <div>
+            <dt>Age</dt>
+            <dd>32</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>Nomadic ‚Äî often parks an RV near Vancouver/Surrey forests or coastal spots</dd>
+          </div>
+          <div>
+            <dt>Occupation</dt>
+            <dd>Freelance photographer (nature &amp; eco‚Äëtourism) + sustainable travel content creator</dd>
+          </div>
+          <div>
+            <dt>Living situation</dt>
+            <dd>Full‚Äëtime van life in a self‚Äëconverted 20‚Äëft RV with solar panels and an off‚Äëgrid setup</dd>
+          </div>
+          <div>
+            <dt>Income</dt>
+            <dd>~CAD 50,000/year (freelance gigs)</dd>
+          </div>
+        </dl>
 
-                    <div class="btnbar" aria-label="View controls">
-                        <button class="btn" id="hcBtn" aria-pressed="false" type="button">
-                            Toggle high contrast
-                        </button>
-                        <button class="btn" id="textBtn" aria-pressed="false" type="button">
-                            Larger text
-                        </button>
-                    </div>
-                </div>
+        <hr />
+
+        <p class="small">
+          <strong>Design context:</strong> Nate is evaluating an induction cooktop for safe, fast, energy‚Äëefficient cooking in a small RV space.
+        </p>
+      </aside>
+
+      <!-- Right column: details -->
+      <main>
+        <section class="card" id="background-bio">
+          <h2>Background / Bio</h2>
+          <p>
+            Nate is a freelance photographer specializing in nature and eco‚Äëtourism. After living in a small Vancouver apartment for years,
+            he sold most of his possessions, bought and renovated an older RV, and embraced a nomadic lifestyle to cut costs, stay close to nature,
+            and create authentic content for Instagram, TikTok, and client magazines. His RV doubles as home, office, and a mobile darkroom.
+            He cooks healthy vegan meals daily to maintain energy for long hikes and shoots.
+          </p>
+        </section>
+
+        <section class="card" id="demographics">
+          <h2>Demographics</h2>
+          <ul>
+            <li><strong>Gender:</strong> Male</li>
+            <li><strong>Relationship:</strong> Single</li>
+            <li><strong>Income:</strong> ~CAD 50,000/year (freelance gigs)</li>
+            <li><strong>Education:</strong> Bachelor‚Äôs in Visual Arts (University of British Columbia)</li>
+            <li><strong>Ethnicity:</strong> Mixed Asian‚ÄëEuropean heritage</li>
+          </ul>
+        </section>
+
+        <section class="card" id="daily-behaviors">
+          <h2>Daily Behaviors &amp; Lifestyle</h2>
+          <ul>
+            <li>Cooks quick, healthy meals (vegan stir‚Äëfries, salads, one‚Äëpot meals) every day using a single‚Äëburner induction cooktop.</li>
+            <li>Relies on solar power ‚Üí needs low‚Äëenergy appliances.</li>
+            <li>Multitasks: cooks while editing photos or planning the next location.</li>
+            <li>Travels frequently (BC parks, coastal routes) ‚Üí equipment must be compact, durable, and safe during movement.</li>
+            <li>Uses apps for grocery delivery, weather, and solar monitoring.</li>
+          </ul>
+        </section>
+
+        <section class="card" id="goals-needs">
+          <h2>Goals &amp; Needs</h2>
+          <p class="small">Related to an induction cooktop in an RV setup.</p>
+          <ul>
+            <li><strong>Safe cooking in a tiny space:</strong> no open flame (fire risk in RV), no excess heat buildup.</li>
+            <li><strong>Fast cooking:</strong> under 15 minutes to free up time for creative work and outdoor shoots.</li>
+            <li><strong>Energy‚Äëefficient:</strong> preserves battery/solar charge during off‚Äëgrid days.</li>
+            <li><strong>Easy to clean:</strong> dust and forest debris are common in RV life.</li>
+            <li><strong>Portable/compact:</strong> fits a 2√ó3 ft counter and stores securely while driving.</li>
+            <li><strong>Simple controls:</strong> big buttons/dials usable with one hand or while wearing gloves.</li>
+          </ul>
+        </section>
+
+        <section class="card" id="frustrations">
+          <h2>Frustrations &amp; Pain Points</h2>
+          <ul>
+            <li>Traditional stoves/gas are dangerous and inefficient in a small, enclosed RV space.</li>
+            <li>Many induction cooktops are too bulky or power‚Äëhungry ‚Üí drain the battery fast.</li>
+            <li>Heat from cooking makes the RV uncomfortably warm in summer.</li>
+            <li>Hard to find magnetic‚Äëcompatible pots that are also lightweight for travel.</li>
+            <li>When gear fails during long trips, he can miss client deadlines or content opportunities.</li>
+          </ul>
+          <p class="small" style="margin-top:10px;">
+            <strong>Budget‚Äëconscious:</strong> wants reliable quality without a luxury price tag.
+          </p>
+        </section>
+
+        <section class="card" id="quote">
+          <h2>Quote</h2>
+          <blockquote>
+            ‚ÄúYou can go onto any platform, YouTube, Instagram or TikTok and advertise how great the van life is. The reality is that it's a careful
+              dance. My work can be surprisingly busy in a sense that things need to be timed just right. I can't afford any delays while on a job
+              or on the move caused by my cooktop simulating the runaway greenhouse effect in my vehicle or completely choking my battery while I'm
+              trying to transfer data between my devices.‚Äù
+          </blockquote>
+        </section>
+
+        <section class="card" id="human-factors">
+          <h2>Human Factors Notes</h2>
+          <dl>
+            <div>
+              <dt>Physical</dt>
+              <dd>Larger hands from carrying camera gear ‚Üí prefers big, tactile controls.</dd>
             </div>
-        </header>
+            <div>
+              <dt>Cognitive</dt>
+              <dd>Often multitasking ‚Üí needs an intuitive, simpler interface</dd>
+            </div>
+            <div>
+              <dt>Environmental</dt>
+              <dd>RV sways/vibrates ‚Üí cooktop material should be non-slip/magnetic.</dd>
+            </div>
+            <div>
+              <dt>Emotional</dt>
+              <dd>Values reliability highly ‚Üí anxiety if equipment is unreliable in remote areas.</dd>
+            </div>
+          </dl>
+        </section>
 
-        <div class="grid">
-            <aside class="card" aria-label="Persona snapshot">
-                <h2 id="about">Persona Snapshot</h2>
-
-                <div class="persona">
-                    <div class="kv">
-                        <div class="k">Name</div>
-                        <div class="v">Mina Park</div>
-                    </div>
-                    <div class="kv">
-                        <div class="k">Age</div>
-                        <div class="v">34</div>
-                    </div>
-                    <div class="kv">
-                        <div class="k">Gender</div>
-                        <div class="v">Non-binary (they/them)</div>
-                    </div>
-                    <div class="kv">
-                        <div class="k">Location</div>
-                        <div class="v">Vancouver, BC (apartment)</div>
-                    </div>
-                    <div class="kv">
-                        <div class="k">Work / Life</div>
-                        <div class="v">Remote customer support + part-time community volunteering</div>
-                    </div>
-                    <div class="kv">
-                        <div class="k">Household</div>
-                        <div class="v">Lives with a partner; small kitchen, limited counter space</div>
-                    </div>
-                </div>
-
-                <div class="callout" role="note" aria-label="Core constraint">
-                    <strong>Core constraint:</strong> Mina has <em>low vision</em> and <em>chronic fatigue</em>, which makes reading labels, managing timers,
-                    and standing for long periods difficultóespecially after work.
-                </div>
-            </aside>
-
-            <section class="card" aria-label="Persona story">
-                <h2>Short Story</h2>
-                <p>
-                    Mina likes the idea of cooking, but energy is unpredictable. On good days, they do simple meals.
-                    On low-energy days, they rely on freezer staples, meal kits, or easy-prep snacks.
-                    Theyíre not looking for ìperfectî routinesójust <strong>repeatable</strong> ones.
-                </p>
-
-                <h2 id="needs">Needs & Pain Points</h2>
-                <ul>
-                    <li><strong>Low vision:</strong> tiny recipe text, low-contrast UIs, and cluttered layouts slow everything down.</li>
-                    <li><strong>Fatigue:</strong> standing 20ñ30 minutes can be too much; cleanup is the hidden cost.</li>
-                    <li><strong>Safety:</strong> forgetting burners/timers is a real anxiety point when exhausted.</li>
-                    <li><strong>Decision overload:</strong> too many options (recipes, groceries) can stall action.</li>
-                </ul>
-
-                <h2>Goals</h2>
-                <ul>
-                    <li>Keep meals ìgood enoughî 4ñ5 days a week without burning out.</li>
-                    <li>Reduce kitchen friction with prep shortcuts and reliable defaults.</li>
-                    <li>Use tools that support vision and memory (labels, reminders, audio).</li>
-                </ul>
-            </section>
-        </div>
-
-        <main id="content" tabindex="-1" aria-label="Main content">
-            <section class="card tools" id="tools" aria-label="Assistive tools and strategies">
-                <h2>Assistive Tools & Coping Strategies</h2>
-                <p>Minaís setup focuses on <strong>clarity</strong>, <strong>automation</strong>, and <strong>less standing</strong>.</p>
-                <ul>
-                    <li><strong>Phone screen reader + zoom</strong> for recipes and grocery apps.</li>
-                    <li><strong>Smart speaker timers</strong> (voice-controlled, multiple timers).</li>
-                    <li><strong>High-contrast labels</strong> on pantry items + ìbig printî marker.</li>
-                    <li><strong>Stool in the kitchen</strong> to sit during prep.</li>
-                    <li><strong>One-pan / one-pot defaults</strong> to reduce cleanup.</li>
-                </ul>
-            </section>
-
-            <section class="card" id="posts" aria-label="Blog posts">
-                <h2>Blog</h2>
-                <p style="color:var(--muted); margin-top:0;">
-                    Entries are short on purpose: quick wins, what worked, and what didnít.
-                </p>
-
-                <div class="posts" role="list">
-                    <article role="listitem" aria-label="Blog post 1">
-                        <h3>Post 1 ó The ìTwo-Timerî Trick</h3>
-                        <p class="meta">February 22, 2026 ï 2 min read</p>
-                        <p>
-                            Todayís win: I used <strong>two timers</strong>óone for cooking, one for ìcheck-in.î
-                            The check-in timer is the secret. It interrupts autopilot before I wander off and forget Iím cooking.
-                        </p>
-                        <div class="callout" role="note">
-                            <strong>What helped:</strong> voice timers (ìset a 7 minute check-inî) + keeping the stove area uncluttered.
-                        </div>
-                    </article>
-
-                    <article role="listitem" aria-label="Blog post 2">
-                        <h3>Post 2 ó Cooking When Standing Is Too Much</h3>
-                        <p class="meta">February 16, 2026 ï 3 min read</p>
-                        <p>
-                            If fatigue is high, I donít ìpush through.î I switch to a sitting meal:
-                            toast + eggs, microwave rice + tuna, or a soup that doesnít need babysitting.
-                            The goal is energy <em>tomorrow</em>, not heroics today.
-                        </p>
-                        <div class="callout" role="note">
-                            <strong>Rule:</strong> if prep takes more than 10 minutes, itís a ìfuture Minaî meal.
-                        </div>
-                    </article>
-
-                    <article role="listitem" aria-label="Blog post 3">
-                        <h3>Post 3 ó Labels That Actually Work</h3>
-                        <p class="meta">February 03, 2026 ï 2 min read</p>
-                        <p>
-                            I replaced tiny printed stickers with thick-marker labels and a consistent layout:
-                            protein left shelf, carbs middle, sauces right. Itís boringóand thatís the point.
-                            Less searching = less fatigue.
-                        </p>
-                        <div class="callout" role="note">
-                            <strong>Small upgrade:</strong> put ìOPEN FIRSTî snacks at eye-level so low-energy days donít become ìskip eatingî days.
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <section class="card" id="accessibility" aria-label="Accessibility notes">
-                <h2>Accessibility Notes (Built Into This Page)</h2>
-                <ul>
-                    <li><strong>Semantic structure:</strong> header, nav, main, section, article for screen readers.</li>
-                    <li><strong>Skip link:</strong> jump straight to content for keyboard users.</li>
-                    <li><strong>Focus states:</strong> visible outlines for keyboard navigation.</li>
-                    <li><strong>Readable layout:</strong> generous spacing, short paragraphs, no tiny text.</li>
-                    <li><strong>Reduced motion support:</strong> respects system ìreduce motion.î</li>
-                    <li><strong>User controls:</strong> high-contrast + larger text toggles (below).</li>
-                </ul>
-                <p style="color:var(--muted);">
-                    Note: ìPerfect contrastî depends on display settings; the high-contrast toggle is included as a practical aid.
-                </p>
-            </section>
-        </main>
-
-        <footer role="contentinfo" aria-label="Site footer">
-            <p>
-                Built as a single-page persona blog for a basic HTML assignment ï
-                <span aria-label="Copyright">©</span> 2026
-            </p>
+        <footer class="card">
+          <p class="small" style="margin:0;">
+            This persona is fictional, this is NOT real person!
+          </p>
         </footer>
+      </main>
     </div>
-
-    <script>
-    (function(){
-      const hcBtn = document.getElementById('hcBtn');
-      const textBtn = document.getElementById('textBtn');
-
-      function setPressed(btn, value){
-        btn.setAttribute('aria-pressed', value ? 'true' : 'false');
-      }
-
-      hcBtn.addEventListener('click', () => {
-        document.body.classList.toggle('hc');
-        setPressed(hcBtn, document.body.classList.contains('hc'));
-      });
-
-      textBtn.addEventListener('click', () => {
-        const big = document.documentElement.style.fontSize === '112%';
-        document.documentElement.style.fontSize = big ? '' : '112%';
-        setPressed(textBtn, !big);
-      });
-    })();
-    </script>
+  </div>
 </body>
 </html>

@@ -1,0 +1,163 @@
+:root{
+  --bg:#f6f7f9;
+  --card:#ffffff;
+  --text:#1b1f24;
+  --muted:#5c6773;
+  --border:#e3e8ef;
+  --accent:#2a6f6a;
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.55;
+}
+
+a{ color:var(--accent); }
+
+.wrapper{
+  max-width:1100px;
+  margin:0 auto;
+  padding:28px 18px 44px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+header .title{
+  margin:0;
+  font-size:28px;
+  letter-spacing:-0.02em;
+}
+
+header .subtitle{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(255,255,255,.6);
+  color:var(--muted);
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:18px;
+  align-items:start;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  box-shadow: 0 1px 0 rgba(16,24,40,.03);
+}
+
+.portrait{
+  width:100%;
+  height:auto;
+  border-radius:12px;
+  border:1px solid var(--border);
+  display:block;
+}
+
+.kv h2{
+  margin:14px 0 8px;
+  font-size:16px;
+  color:var(--muted);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+dl{
+  margin:0;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:10px;
+}
+
+dt{
+  font-weight:650;
+  font-size:13px;
+  color:var(--muted);
+  margin:0;
+}
+
+dd{
+  margin:2px 0 0;
+  font-size:15px;
+}
+
+main h2{
+  margin:0 0 10px;
+  font-size:20px;
+  letter-spacing:-0.01em;
+}
+
+section{
+  margin-bottom:14px;
+}
+
+section p{
+  margin:0;
+}
+
+ul{
+  margin:8px 0 0 18px;
+  padding:0;
+}
+
+li{ margin:6px 0; }
+
+blockquote{
+  margin:10px 0 0;
+  padding:12px 14px;
+  border-left:4px solid var(--accent);
+  background: #f2fbfa;
+  border-radius:10px;
+  color:#0d2b29;
+}
+
+.small{
+  color:var(--muted);
+  font-size:13px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:14px 0;
+}
+
+footer{
+  margin-top:18px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+@media (max-width: 880px){
+  .grid{ grid-template-columns: 1fr; }
+  header{ align-items:flex-start; }
+  .badge{ align-self:flex-start; }
+}
